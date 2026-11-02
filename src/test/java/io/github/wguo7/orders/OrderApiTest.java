@@ -240,9 +240,9 @@ class OrderApiTest {
     @Test
     void concurrentDuplicatesCreateOneOrder() throws Exception {
         List<Res> results = race(50, () -> create(LIMIT_BUY, "same-key"));
-        assertThat(results).extracting(Res::id).containsOnly(results.get(0).id());
         assertThat(results).filteredOn(r -> r.status == 201).hasSize(1);
         assertThat(results).filteredOn(r -> r.status == 200).hasSize(49);
+        assertThat(results).extracting(Res::id).containsOnly(results.get(0).id());
         assertThat(count("orders")).isEqualTo(1);
         assertThat(count("idempotency_keys")).isEqualTo(1);
         assertThat(count("order_events")).isEqualTo(1);
