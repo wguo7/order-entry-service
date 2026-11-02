@@ -1,0 +1,9 @@
+target/
+.pgdata/
+results/raw/
+*.log
+.env
+.idea/
+NOW.md
+CLAUDE.md
+DECISIONS.md
