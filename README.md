@@ -46,7 +46,7 @@ Amend, cancel and fill read the order with `SELECT ... FOR UPDATE`, which makes 
 
 ## Tests
 
-`mvn verify` runs 29 test methods, 46 cases once parameterized tests expand, against a real Postgres. They passed in three consecutive runs. JaCoCo measures 95.6% line coverage and 90.4% branch coverage. `OrderTest` covers the state machine and the order rules without a database. `OrderApiTest` drives the HTTP API end to end, including three race tests:
+`mvn verify` runs 29 test methods, 46 cases once parameterized tests expand, against a real Postgres. They passed in three consecutive local runs and on GitHub Actions, where the CI workflow runs the same `mvn verify` against a Postgres 17 service container. JaCoCo measures 95.6% line coverage and 90.4% branch coverage. `OrderTest` covers the state machine and the order rules without a database. `OrderApiTest` drives the HTTP API end to end, including three race tests:
 
 - 50 identical creates with one key, sent at once, must produce one order, one 201 and 49 replays.
 - 30 fills of 5 shares on a 100-share order, sent at once, must apply exactly 20 and leave the order filled. The other 10 find a filled order and get 409.
